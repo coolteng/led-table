@@ -49,8 +49,10 @@ AppController::AppController(size_t width, size_t height) : width(width), height
 
 void AppController::process(unsigned long tick, Input& input, Canvas& canvas) 
 {
+  Serial.print("Process ");
+  Serial.println((int)app);
   if(app) {
-//    app->handleInput(input);
+    app->handleInput(input);
     app->run(tick);
     app->render(canvas);
     app->controlFlow(*this);
@@ -91,6 +93,8 @@ void AppController::setNewApp(App* newApp)
 {
   freeCurrentApp();
   app = newApp;
+  Serial.print("Set new App");
+  Serial.println((int)newApp);
 }
 
 void AppController::freeCurrentApp()

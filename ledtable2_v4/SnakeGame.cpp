@@ -9,7 +9,7 @@
 #include "SnakeGame.h"
 
 SnakeGame::SnakeGame(size_t width, size_t height)
-  : App(width, height), acolor(RED), gameSpeed(250)
+  : App(width, height), acolor(COLOR_RED), gameSpeed(250)
 {
   snakeInit();
 }
@@ -97,7 +97,7 @@ void SnakeGame::render(Canvas &canvas)
 
   //Draw snake
   for (int i=0; i<curLength; i++){
-    canvas.setPixel(xs[i], ys[i], WHITE);
+    canvas.setPixel(xs[i], ys[i], COLOR_WHITE);
   }
   
   canvas.show();

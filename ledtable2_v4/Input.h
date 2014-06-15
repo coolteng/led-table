@@ -17,13 +17,19 @@
 
 #include <Arduino.h>
 
-
 typedef uint8_t input_t;
 
 void UsbTask();
 
 class Input {
+private:
+  int controllerIndex;
+  uint8_t curControl = BTN_NONE;
+  uint8_t prevControl = BTN_NONE;  
+  
 public:
+  Input(int controllerIndex);
+  void init();
   input_t read();
 };
 

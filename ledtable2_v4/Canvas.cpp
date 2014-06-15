@@ -155,7 +155,7 @@ void Canvas::fadeOut(){
         if (i%ColumnDelay==0){
           //Draw vertical line
           for (int y=0;y<height;y++){
-            setPixel(curColumn, y, GREEN);
+            setPixel(curColumn, y, COLOR_GREEN);
           }
           curColumn++;
         }

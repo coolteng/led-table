@@ -80,7 +80,7 @@ AbstractBrick brickLib[7] = {
 #define field(x,y) field[(x)+(y)*width]
 
 TetrisGame::TetrisGame(size_t width, size_t height)
-  : App(width, height), brickSpeed(INIT_SPEED)
+  : App(width, height), brickSpeed(INIT_SPEED), prevControl(BTN_NONE), curControl(BTN_NONE)
 {
   field = new Field[width*(height+1)];
   clearField();
@@ -96,10 +96,7 @@ TetrisGame::~TetrisGame()
 
 void TetrisGame::handleInput(Input &input){
   curControl = input.read();
-}
-
-void TetrisGame::run(unsigned long currentTime){
-  if(currentTime - prevUpdateTime > brickSpeed)
+  if(curControl != prevControl) 
   {
     switch(curControl){
       case BTN_LEFT:
@@ -117,8 +114,14 @@ void TetrisGame::run(unsigned long currentTime){
       case BTN_START:
         ended = true;
         break;
-
     }
+    prevControl = curControl;
+  }
+}
+
+void TetrisGame::run(unsigned long currentTime){
+  if(currentTime - prevUpdateTime > brickSpeed)
+  {
     if (activeBrick.enabled){
       shiftActiveBrick(DIR_DOWN);
     } else {

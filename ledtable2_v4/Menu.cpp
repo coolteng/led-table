@@ -23,7 +23,7 @@ Menu::Menu(size_t width, size_t height)
 
 void Menu::handleInput(Input& input)
 {
-//  Serial.println("before read");
+  Serial.println("Handle input");
   uint8_t curControl = input.read();
   if (curControl != BTN_NONE){
     if (curControl == BTN_LEFT){
@@ -40,7 +40,6 @@ void Menu::handleInput(Input& input)
     }
     checkSelectionRange();
   }
-//  Serial.println("after read");
 }
 
 void Menu::run(unsigned long tick)
@@ -76,7 +75,7 @@ void Menu::render(Canvas& canvas)
       curSelectionTextLength = 7;
       break;
   }
-  boolean finished = canvas.printText(curSelectionText, curSelectionTextLength, textPosition, (height-8)/2, RED);
+  boolean finished = canvas.printText(curSelectionText, curSelectionTextLength, textPosition, (height-8)/2, COLOR_RED);
   if(finished) {
     textPosition = 0;
   }

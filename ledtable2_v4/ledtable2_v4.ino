@@ -22,9 +22,6 @@
 #define _OCTOWS2811_H_
 #include <OctoWS2811.h>
 #endif
-#include <XBOXUSB.h>
-#include <spi4teensy3.h>
-#include <usbhub.h>
 
 
 #include "LEDDriver.h"
@@ -32,6 +29,11 @@
 #include "App.h"
 #include "Input.h"
 
+//USB and Xbox gamepad library
+#ifdef TRULALALA
+#include <XBOXUSB.h>
+#include <spi4teensy3.h>
+#endif
 
 #ifdef USE_FAST_LED
 FAST_LEDDriver<LEDS_CHANNEL_1+LEDS_CHANNEL_2+LEDS_CHANNEL_3+LEDS_CHANNEL_4+LEDS_CHANNEL_5+LEDS_CHANNEL_6+LEDS_CHANNEL_7+LEDS_CHANNEL_8> leds;
@@ -49,19 +51,27 @@ Canvas canvas[CONCURRENT_APPS] = {
   Canvas(13, 11, 26, 0, 52, leds),
   Canvas(13, 11, 39, 0, 52, leds)
 };
-Input input;
+Input input[CONCURRENT_APPS] = {
+  Input(0),
+  Input(1),
+  Input(2),
+  Input(3)
+};
 
-AppController* appController[CONCURRENT_APPS];
+AppController appController[CONCURRENT_APPS] = {
+  AppController(13,11),
+  AppController(13,11),
+  AppController(13,11),
+  AppController(13,11)
+};
 
-USB Usb;
-//USBHub USBHub(&Usb);
-XBOXUSB Xbox(&Usb);
 
 void setup(){
   Serial.begin(115200);
 
+  delay(2000);
   //Initialise led driver
-//  Serial.println("Initialize pixels");
+  Serial.println("Initialize pixels");
   leds.initPixels();
 //  leds.clearPixels();
 //  Serial.println("Show pixels");
@@ -69,23 +79,12 @@ void setup(){
 //  Serial.println("Pixels shown");
   
   for(int appIndex = 0; appIndex <CONCURRENT_APPS; ++appIndex) {
-    appController[appIndex] = new AppController(13,11);
-    appController[appIndex]->startMenu();
+    input[appIndex].init();
+    appController[appIndex].startMenu();
   }
   
-
   //Init random number generator
   randomSeed(millis());
-  
-  while (!Serial); // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
-  delay(5000);
-  if (Usb.Init() == -1) {
-    Serial.print(F("\r\nOSC did not start"));
-    while (1); //halt
-  }
-  Serial.print(F("\r\nXBOX USB Library Started"));
-//  delay(2000);
-
 }
 
 
@@ -109,23 +108,24 @@ void loop(){
   delay(50);
   offset = (offset+1)%(NUMBER_ALL_LEDS);
 */
-/*  static unsigned long lastFPSUpdate = 0;
+  static unsigned long lastFPSUpdate = 0;
   static unsigned long renderedFrames = 0;
+  UsbTask();
   unsigned long currentTick = millis();
+  Serial.println("Running appcontroller");
   for(int appIndex = 0; appIndex < CONCURRENT_APPS; ++appIndex) {
-    appController[appIndex]->process(currentTick, input, canvas[appIndex]);
+    appController[appIndex].process(currentTick, input[appIndex], canvas[appIndex]);
   }
   leds.showPixels();
   ++renderedFrames;
   if(currentTick - lastFPSUpdate > 1000) {
-//    Serial.print("Frames per second:");
-//    Serial.println(renderedFrames);
+    Serial.print("Frames per second:");
+    Serial.println(renderedFrames);
     lastFPSUpdate = currentTick;
     renderedFrames = 0;
   }
-*/
 
-  Usb.Task();
+/*  Usb.Task();
   if (Xbox.Xbox360Connected) {
     if (Xbox.getButtonPress(L2) || Xbox.getButtonPress(R2)) {
       Serial.print("L2: ");
@@ -208,6 +208,7 @@ void loop(){
       Serial.println(F("Y"));
   }
   delay(1);
+  */
 }
 
 

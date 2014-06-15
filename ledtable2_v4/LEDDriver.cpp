@@ -14,7 +14,7 @@ OctoWS2811 octoleds(LEDS_CHANNEL_1, displayMemory, drawingMemory, config);
 
 #endif
 
-color_t colorLib[6] = {RED, GREEN, BLUE, YELLOW, LBLUE, PURPLE};
+color_t colorLib[6] = {COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW, COLOR_LBLUE, COLOR_PURPLE};
 
 #define MAP_POSITION_TO_PIXEL(x, y)  
 //  #ifdef ORIENTATION_HORIZONTAL_UPSIDEDOWN

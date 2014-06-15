@@ -62,7 +62,7 @@ void Stars::render(Canvas& canvas)
             positionOk = true;
           }
         }
-        canvas.setPixel(x, y, WHITE);
+        canvas.setPixel(x, y, COLOR_WHITE);
       }
       createNewStars = false;
     }

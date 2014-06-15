@@ -8,6 +8,7 @@ class TetrisGame : public App {
 
 private:
   unsigned long prevUpdateTime;
+  input_t prevControl;
   input_t curControl;
   uint16_t brickSpeed;
   uint8_t nbRowsThisLevel;

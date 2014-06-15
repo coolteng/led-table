@@ -8,14 +8,14 @@
 typedef unsigned int color_t;
 
 /* *** LED color table *** */
-#define  OFF    0x000000
-#define  GREEN  0x00FF00
-#define  RED    0xFF0000
-#define  BLUE   0x0000FF
-#define  YELLOW 0xFFFF00
-#define  LBLUE  0x00FFFF
-#define  PURPLE 0xFF00FF
-#define  WHITE  0XFFFFFF
+#define  COLOR_OFF 0x000000
+#define  COLOR_GREEN  0x00FF00
+#define  COLOR_RED    0xFF0000
+#define  COLOR_BLUE   0x0000FF
+#define  COLOR_YELLOW 0xFFFF00
+#define  COLOR_LBLUE  0x00FFFF
+#define  COLOR_PURPLE 0xFF00FF
+#define  COLOR_WHITE  0XFFFFFF
 extern color_t colorLib[6];
 
 
