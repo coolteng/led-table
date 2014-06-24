@@ -16,6 +16,7 @@
 #define  BTN_START  5
 
 #include <Arduino.h>
+#include "config.h"
 
 typedef uint8_t input_t;
 

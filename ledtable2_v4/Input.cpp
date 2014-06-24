@@ -7,11 +7,26 @@
 
 USB Usb;
 USBHub USBHub(&Usb);
-XBOXUSB xboxController[4] = {
+
+XBOXUSB xboxController[NUMBER_CONCURRENT_APPS] = {
   XBOXUSB(&Usb),
+#if NUMBER_CONCURRENT_APPS > 1
   XBOXUSB(&Usb),
+#endif
+#if NUMBER_CONCURRENT_APPS > 2
   XBOXUSB(&Usb),
-  XBOXUSB(&Usb)
+#endif
+#if NUMBER_CONCURRENT_APPS > 3
+  XBOXUSB(&Usb),
+#endif
+};
+
+#define MAX_LEDS 4
+LEDEnum ledEnums[MAX_LEDS] = {
+  LED1,
+  LED2, 
+  LED4,
+  LED3,
 };
 
 boolean usbInitialized = false;
@@ -53,8 +68,7 @@ void Input::init()
 
 
 uint8_t Input::read(){
-  Serial.print("read controller ");
-  Serial.println((int)xboxController);
+  xboxController[controllerIndex].setLedOn(ledEnums[controllerIndex % MAX_LEDS]);
   if (xboxController[controllerIndex].Xbox360Connected) {
     if (xboxController[controllerIndex].getButtonPress(B) || xboxController[controllerIndex].getButtonPress(RIGHT)) 
     {
