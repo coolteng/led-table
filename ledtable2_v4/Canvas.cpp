@@ -47,7 +47,11 @@ color_t Canvas::getPixel(uint8_t x, uint8_t y)
 
 void Canvas::clear()
 {
-  ledDriver.clearPixels();
+  for(int x=0; x<width; ++x) {
+    for(int y=0; y<height; ++y) {
+      ledDriver.setPixel(MAP_POSITION_TO_PIXEL(x,y), COLOR_OFF);
+    }  
+  }
 }
 
 void Canvas::show()
