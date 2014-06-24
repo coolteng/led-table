@@ -55,6 +55,7 @@ void Menu::render(Canvas& canvas)
 {
   char* curSelectionText;
   int curSelectionTextLength;
+  canvas.clear();
   
   //Show menu system and wait for input
   switch (curSelection){
