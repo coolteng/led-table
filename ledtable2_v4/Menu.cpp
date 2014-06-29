@@ -60,8 +60,8 @@ void Menu::render(Canvas& canvas)
   //Show menu system and wait for input
   switch (curSelection){
     case 1:
-      curSelectionText = "1 Rainbow";
-      curSelectionTextLength = 9;
+      curSelectionText = "1 Pong";
+      curSelectionTextLength = 6;
       break;
     case 2:
       curSelectionText = "2 Tetris";
@@ -72,7 +72,11 @@ void Menu::render(Canvas& canvas)
       curSelectionTextLength = 7;
       break;
     case 4:
-      curSelectionText = "4 Stars";
+      curSelectionText = "4 Rainbow";
+      curSelectionTextLength = 9;
+      break;
+    case 5:
+      curSelectionText = "5 Stars";
       curSelectionTextLength = 7;
       break;
   }
@@ -89,7 +93,7 @@ void Menu::controlFlow(AppController& appController)
     Serial.println("Run Selection true");
     switch(curSelection) {
       case 1:
-        appController.startRainbow();
+        appController.startPong();
         break;
       case 2:
         appController.startTetris();
@@ -98,6 +102,9 @@ void Menu::controlFlow(AppController& appController)
         appController.startSnake();
         break;
       case 4:
+        appController.startRainbow();
+        break;
+      case 5:
         appController.startStars();
         break;
     }

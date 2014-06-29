@@ -6,6 +6,7 @@
 #include "Stars.h"
 #include "SnakeGame.h"
 #include "TetrisGame.h"
+#include "Pong.h"
 
 App::App(size_t width, size_t height) : width(width), height(height),ended(false)
 {
@@ -86,6 +87,12 @@ void AppController::startTetris()
 void AppController::startSnake()
 {
   App* newApp = new SnakeGame(width, height);
+  setNewApp(newApp);
+}
+
+void AppController::startPong()
+{
+  App* newApp = new Pong(width, height);
   setNewApp(newApp);
 }
 

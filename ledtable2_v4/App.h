@@ -39,6 +39,7 @@ public:
   void startStars();
   void startTetris();
   void startSnake();
+  void startPong();
 };
 
 #endif

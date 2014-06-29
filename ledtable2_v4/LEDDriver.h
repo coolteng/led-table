@@ -8,16 +8,16 @@
 typedef unsigned int color_t;
 
 /* *** LED color table *** */
-#define  COLOR_OFF 0x000000
-#define  COLOR_GREEN  0x00FF00
-#define  COLOR_RED    0xFF0000
-#define  COLOR_BLUE   0x0000FF
-#define  COLOR_YELLOW 0xFFFF00
-#define  COLOR_LBLUE  0x00FFFF
-#define  COLOR_PURPLE 0xFF00FF
-#define  COLOR_WHITE  0XFFFFFF
+#define  COLOR_OFF       0x000000
+#define  COLOR_GREEN     0x00FF00
+#define  COLOR_RED       0xFF0000
+#define  COLOR_BLUE      0x0000FF
+#define  COLOR_YELLOW    0xFFFF00
+#define  COLOR_LBLUE     0x00FFFF
+#define  COLOR_PURPLE    0xFF00FF
+#define  COLOR_WHITE     0XFFFFFF
 extern color_t colorLib[6];
-
+#define DIM(x) ( (((x&0xFF0000)>>18)<<16) | (((x&0x00FF00)>>10)<<8) | ((x&0x0000FF)>>2) )
 
 
 class LEDDriver {
