@@ -5,11 +5,13 @@
  * 
  * Snake game
  */
-
+ 
 #include "SnakeGame.h"
 
+#define SNAKEWIDTH  1 //Snake width
+
 SnakeGame::SnakeGame(size_t width, size_t height)
-  : App(width, height), acolor(COLOR_RED), gameSpeed(250)
+  : App(width, height), acolor(COLOR_RED), gameSpeed(250), prevUpdateTime(0)
 {
   snakeInit();
 }
@@ -29,7 +31,6 @@ void SnakeGame::snakeInit()
 
 void SnakeGame::run(unsigned long curTime)
 {
-  static unsigned long prevUpdateTime = 0;
   if ((curTime - prevUpdateTime) <gameSpeed)
   {
     return; 

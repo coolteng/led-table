@@ -9,7 +9,6 @@ private:
   int ys[127];// max snake length is array length
   int dir;//Current Direction of snake
   int score;
-  #define SNAKEWIDTH  1 //Snake width
   
   int ax;//Apple x position
   int ay;//Apple y position
@@ -17,6 +16,8 @@ private:
   
   int gameSpeed;
   
+  unsigned long prevUpdateTime;
+
   boolean collide(int x1, int x2, int y1, int y2, int w1, int w2, int h1, int h2);
   void snakeInit();
   void runSnake();

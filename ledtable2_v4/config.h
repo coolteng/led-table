@@ -1,5 +1,5 @@
-// #define TOWER // Uncomment if compiling for tower
-#define TABLE // Uncomment if compiling for table
+#define TOWER // Uncomment if compiling for tower
+//#define TABLE // Uncomment if compiling for table
 
 #if defined(TOWER)
   #define CONCURRENT_APPS 4
