@@ -52,9 +52,6 @@ void Pong::render(Canvas &canvas)
 {
   canvas.clear();
  
-  // Draw ball
-  canvas.setPixel(ballx,bally,COLOR_WHITE);
-  
   // Draw score left
   for(int score=0; score<scorePlayerLeft; ++score) {
     canvas.setPixel(score, 0, DIM(COLOR_BLUE)); 
@@ -65,6 +62,9 @@ void Pong::render(Canvas &canvas)
     canvas.setPixel(width-1-score, height-1, DIM(COLOR_RED)); 
   }
 
+  // Draw ball
+  canvas.setPixel(ballx,bally,COLOR_WHITE);
+  
   // Draw player left
   for (int y=positionPlayerLeft-PLAYER_HEIGHT/2; y<=positionPlayerLeft+PLAYER_HEIGHT/2; ++y){
     canvas.setPixel(0, y, COLOR_BLUE);
