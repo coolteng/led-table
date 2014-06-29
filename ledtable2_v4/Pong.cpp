@@ -12,13 +12,15 @@ Pong::Pong(size_t width, size_t height)
     ballx(width/2),bally(height/2), 
     velocityx(random(1)*2-1), velocityy(0),
     ballBounces(0),
-    gameSpeed(180), prevUpdateTime(0), lastAutoPlayerMoveTime(0)
+    gameSpeed(180), prevUpdateTime(0), lastAutoPlayerMoveTime(0), rumbleUntil(0)
 {
 
 }
 
 void Pong::run(unsigned long curTime)
 {
+  currentTime = curTime;
+  
   // Everytime since the player is movable everytime, not only once per game step
   checkBallHitByPlayer();
   
@@ -94,6 +96,14 @@ void Pong::handleInput(Input &input)
       --positionPlayerLeft;
     }
   }
+  if(currentTime < rumbleUntil) 
+  {
+    input.startRumble();
+  }
+  else
+  {
+    input.stopRumble();
+  }
 }
 
 void Pong::checkBallOutOfBounds()
@@ -136,22 +146,25 @@ void Pong::checkBallHitByPlayer()
       velocityx = 1;
       ballx = 2;
       ++ballBounces;
+      rumbleUntil = currentTime + 200;
     } 
     else if(bally < positionPlayerLeft && bally >= positionPlayerLeft - PLAYER_HEIGHT / 2) 
     {
       velocityx = 1;
-      velocityy = -1; 
+      velocityy = max(-1,velocityy-1); 
       ballx = 2;
       bally = positionPlayerLeft - PLAYER_HEIGHT / 2-1;
       ++ballBounces;
+      rumbleUntil = currentTime + 200;
     }    
     else if(bally > positionPlayerLeft && bally <= positionPlayerLeft + (PLAYER_HEIGHT-1) / 2) 
     {
       velocityx = 1;
-      velocityy = 1; 
+      velocityy = min(1,velocityy+1); 
       ballx = 2;
       bally = positionPlayerLeft + (PLAYER_HEIGHT-1) / 2+1;
       ++ballBounces;
+      rumbleUntil = currentTime + 200;
     }    
   } 
   else if(ballx == width-1)
@@ -165,7 +178,7 @@ void Pong::checkBallHitByPlayer()
     else if(bally < positionPlayerRight && bally >= positionPlayerRight - PLAYER_HEIGHT / 2) 
     {
       velocityx = -1;
-      velocityy = -1; 
+      velocityy = max(-1,velocityy-1); 
       ballx = width-3;
       bally = positionPlayerRight - PLAYER_HEIGHT / 2-1;
       ++ballBounces;
@@ -173,7 +186,7 @@ void Pong::checkBallHitByPlayer()
     else if(bally > positionPlayerRight && bally <= positionPlayerRight + (PLAYER_HEIGHT-1) / 2) 
     {
       velocityx = -1;
-      velocityy = 1; 
+      velocityy = min(1,velocityy+1); 
       ballx = width-3;
       bally = positionPlayerRight + (PLAYER_HEIGHT-1) / 2+1;
       ++ballBounces;

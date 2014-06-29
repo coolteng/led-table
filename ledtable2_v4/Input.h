@@ -32,6 +32,8 @@ public:
   Input(int controllerIndex);
   void init();
   input_t read();
+  void startRumble();
+  void stopRumble();
 };
 
 #endif

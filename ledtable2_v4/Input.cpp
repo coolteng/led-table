@@ -101,4 +101,13 @@ uint8_t Input::read(){
   return curControl;
 }
 
+void Input::startRumble()
+{
+   xboxController[controllerIndex].setRumbleOn(0, 255);
+}
+
+void Input::stopRumble()
+{
+   xboxController[controllerIndex].setRumbleOn(0, 0);
+}
 

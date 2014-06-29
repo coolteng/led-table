@@ -21,9 +21,10 @@ private:
   
   input_t lastControl;
   
+  unsigned long currentTime;
   unsigned long prevUpdateTime;
   unsigned long lastAutoPlayerMoveTime;
-
+  unsigned long rumbleUntil;
 
   void checkBallOutOfBounds();
   void checkBallHitByPlayer();
