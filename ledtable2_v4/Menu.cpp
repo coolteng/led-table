@@ -11,7 +11,7 @@
 #include "SnakeGame.h"
 
 #define MINSELECTION  1
-#define MAXSELECTION  4
+#define MAXSELECTION  5
 
 #define TEXTSPEED  110
 

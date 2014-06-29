@@ -12,13 +12,24 @@ Pong::Pong(size_t width, size_t height)
     ballx(width/2),bally(height/2), 
     velocityx(random(1)*2-1), velocityy(0),
     ballBounces(0),
-    gameSpeed(180), prevUpdateTime(0), lastAutoPlayerMoveTime(0), rumbleUntil(0)
+    gameSpeed(180), prevUpdateTime(0), lastAutoPlayerMoveTime(0), rumbleUntil(0), waitUntil(0)
 {
 
 }
 
 void Pong::run(unsigned long curTime)
 {
+  if(waitUntil > curTime)
+  {
+    return;
+  }
+  
+  if(scorePlayerLeft == MAX_SCORE || scorePlayerRight == MAX_SCORE) 
+  {
+    ended = true;
+    return;
+  }
+
   currentTime = curTime;
   
   // Everytime since the player is movable everytime, not only once per game step
@@ -32,7 +43,7 @@ void Pong::run(unsigned long curTime)
     }
   }
   
-  if ((curTime - prevUpdateTime) <gameSpeed-ballBounces*2)
+  if ((curTime - prevUpdateTime) <gameSpeed-min(160, ballBounces*2))
   {
     return; 
   }
@@ -43,11 +54,6 @@ void Pong::run(unsigned long curTime)
   checkBallOutOfBounds();
   
   prevUpdateTime = curTime;
-  
-  if(scorePlayerLeft == MAX_SCORE || scorePlayerRight == MAX_SCORE) 
-  {
-    ended = true;
-  }
 }
 
 void Pong::render(Canvas &canvas)
@@ -96,6 +102,8 @@ void Pong::handleInput(Input &input)
       --positionPlayerLeft;
     }
   }
+  lastControl = curControl;
+  
   if(currentTime < rumbleUntil) 
   {
     input.startRumble();
@@ -125,6 +133,7 @@ void Pong::checkBallOutOfBounds()
     bally = height/2;
     ++scorePlayerRight;
     ballBounces = 0;
+    waitUntil = currentTime + 2000;
   } 
   else if(ballx > width-1) 
   {
@@ -134,6 +143,7 @@ void Pong::checkBallOutOfBounds()
     bally = height/2;
     ++scorePlayerLeft;
     ballBounces = 0;
+    waitUntil = currentTime + 2000;
   } 
 }
 

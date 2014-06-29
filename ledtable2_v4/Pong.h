@@ -25,7 +25,8 @@ private:
   unsigned long prevUpdateTime;
   unsigned long lastAutoPlayerMoveTime;
   unsigned long rumbleUntil;
-
+  unsigned long waitUntil;
+  
   void checkBallOutOfBounds();
   void checkBallHitByPlayer();
   boolean moveAutoPlayer();
