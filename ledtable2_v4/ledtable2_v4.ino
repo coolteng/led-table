@@ -43,40 +43,51 @@ FAST_LEDDriver<LEDS_CHANNEL_1+LEDS_CHANNEL_2+LEDS_CHANNEL_3+LEDS_CHANNEL_4+LEDS_
 OctoWS2811Driver<LEDS_CHANNEL_1+LEDS_CHANNEL_2+LEDS_CHANNEL_3+LEDS_CHANNEL_4+LEDS_CHANNEL_5+LEDS_CHANNEL_6+LEDS_CHANNEL_7+LEDS_CHANNEL_8> leds;
 #endif
 
-#define CONCURRENT_APPS 4
-
 Canvas canvas[CONCURRENT_APPS] = {
-  Canvas(13, 11, 0, 0, 52, leds),
-  Canvas(13, 11, 13, 0, 52, leds),
-  Canvas(13, 11, 26, 0, 52, leds),
-  Canvas(13, 11, 39, 0, 52, leds)
+  Canvas(FIELD_WIDTH, FIELD_HEIGHT, 0, 0, FIELD_WIDTH*CONCURRENT_APPS, leds),
+#if CONCURRENT_APPS > 1
+  Canvas(FIELD_WIDTH, FIELD_HEIGHT, FIELD_WIDTH*1, 0, FIELD_WIDTH*CONCURRENT_APPS, leds),
+#endif
+#if CONCURRENT_APPS > 2
+  Canvas(FIELD_WIDTH, FIELD_HEIGHT, FIELD_WIDTH*2, 0, FIELD_WIDTH*CONCURRENT_APPS, leds),
+#endif
+#if CONCURRENT_APPS > 3
+  Canvas(FIELD_WIDTH, FIELD_HEIGHT, FIELD_WIDTH*3, 0, FIELD_WIDTH*CONCURRENT_APPS, leds),
+#endif
 };
 Input input[CONCURRENT_APPS] = {
   Input(0),
+#if CONCURRENT_APPS > 1
   Input(1),
+#endif
+#if CONCURRENT_APPS > 2
   Input(2),
+#endif
+#if CONCURRENT_APPS > 3
   Input(3)
+#endif
 };
 
 AppController appController[CONCURRENT_APPS] = {
-  AppController(13,11),
-  AppController(13,11),
-  AppController(13,11),
-  AppController(13,11)
+  AppController(FIELD_WIDTH, FIELD_HEIGHT),
+#if CONCURRENT_APPS > 1
+  AppController(FIELD_WIDTH, FIELD_HEIGHT),
+#endif
+#if CONCURRENT_APPS > 2
+  AppController(FIELD_WIDTH, FIELD_HEIGHT),
+#endif
+#if CONCURRENT_APPS > 3
+  AppController(FIELD_WIDTH, FIELD_HEIGHT),
+#endif
 };
 
 
 void setup(){
   Serial.begin(115200);
 
-  delay(2000);
   //Initialise led driver
   Serial.println("Initialize pixels");
   leds.initPixels();
-//  leds.clearPixels();
-//  Serial.println("Show pixels");
-//  leds.showPixels();
-//  Serial.println("Pixels shown");
   
   for(int appIndex = 0; appIndex <CONCURRENT_APPS; ++appIndex) {
     input[appIndex].init();
@@ -89,25 +100,6 @@ void setup(){
 
 
 void loop(){
-/*  static int offset = 0;
-  int allPixels = NUMBER_ALL_LEDS;
-  int redOffset = allPixels / 3;
-  int blueOffset = allPixels / 3 * 2;
-  for(int i=0; i<NUMBER_ALL_LEDS;++i) {
-    if(i>= offset && i<offset+13) {
-      leds.setPixel(i,GREEN);
-    } else if(i>= (offset+redOffset)%allPixels && i<(offset+redOffset)%allPixels+13) {
-      leds.setPixel(i,RED);
-    } else if(i>= (offset+blueOffset)%allPixels && i<(offset+blueOffset)%allPixels+13) {
-      leds.setPixel(i,BLUE);
-    } else {
-      leds.setPixel(i,OFF);
-    }
-  } 
-  leds.showPixels();
-  delay(50);
-  offset = (offset+1)%(NUMBER_ALL_LEDS);
-*/
   static unsigned long lastFPSUpdate = 0;
   static unsigned long renderedFrames = 0;
   UsbTask();
@@ -118,6 +110,9 @@ void loop(){
   leds.showPixels();
   ++renderedFrames;
   if(currentTick - lastFPSUpdate > 1000) {
+    // get random number, to make the first game different
+    random(8);
+    
     Serial.print("Frames per second:");
     Serial.println(renderedFrames);
     lastFPSUpdate = currentTick;

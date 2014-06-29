@@ -23,7 +23,6 @@ public:
   void setPixel(uint8_t x, uint8_t y, color_t color);
   color_t getPixel(uint8_t x, uint8_t y);
   boolean printText(char* text, size_t textLength, int xoffset, int yoffset, int color);
-  void scrollTextBlocked(char* text, int textLength, int color);
   void clear();
   void show();
   void fadeOut();

@@ -8,15 +8,15 @@
 USB Usb;
 USBHub USBHub(&Usb);
 
-XBOXUSB xboxController[NUMBER_CONCURRENT_APPS] = {
+XBOXUSB xboxController[CONCURRENT_APPS] = {
   XBOXUSB(&Usb),
-#if NUMBER_CONCURRENT_APPS > 1
-  XBOXUSB(&Usb),
-#endif
-#if NUMBER_CONCURRENT_APPS > 2
+#if CONCURRENT_APPS > 1
   XBOXUSB(&Usb),
 #endif
-#if NUMBER_CONCURRENT_APPS > 3
+#if CONCURRENT_APPS > 2
+  XBOXUSB(&Usb),
+#endif
+#if CONCURRENT_APPS > 3
   XBOXUSB(&Usb),
 #endif
 };
@@ -49,9 +49,11 @@ void initializeUsb()
 }
 
 void UsbTask(){
+  #ifndef DISABLE_USB
   Serial.print("running UsbTask");
   Serial.println((int)&Usb);
   Usb.Task();
+  #endif
 }
 
 Input::Input(int controllerIndex) : controllerIndex(controllerIndex) 

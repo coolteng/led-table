@@ -7,7 +7,7 @@
 #define MAP_POSITION_TO_PIXEL(x, y) (y+yOffset)*rowLength+(x+xOffset)
 #endif
 #ifdef HORIZONTAL_LEFT_TO_RIGHT_AND_REVERSE
-#define MAP_POSITION_TO_PIXEL(x, y) (y*rowLength +(y%2 ?  x : ((FIELD_HEIGHT-1)-x))
+#define MAP_POSITION_TO_PIXEL(x, y) (y*rowLength +(y%2 ?  x : ((height-1)-x)))
 #endif
 
 //  #ifdef ORIENTATION_HORIZONTAL_UPSIDEDOWN
@@ -111,26 +111,6 @@ uint8_t Canvas::loadCharInBuffer(char letter)
   return tmpCharWidth;
 }
 
-void Canvas::scrollTextBlocked(char* text, int textLength, int color){
-/*  unsigned long prevUpdateTime = 0;
-  Serial.println(-textLength);
-  
-  for (int x=FIELD_WIDTH; x>-(textLength*8); x--){
-    printText(text, textLength, x, 2, color);
-    //Read buttons
-    unsigned long curTime;
-    do{
-      readInput();
-      curTime = millis();
-    } while (((curTime - prevUpdateTime) < TEXTSPEED) && (curControl == BTN_NONE));//Once enough time  has passed, proceed
-    
-    prevUpdateTime = curTime;
-  }
-*/
-}
-
-
-
 /* *********************************** */
 
 void Canvas::fadeOut(){
@@ -198,26 +178,4 @@ void Canvas::dimLeds(float factor){
   }
 }
 
-//For debugging, allow field to be printed on serial console
-#ifdef USE_CONSOLE_OUTPUT
-void Canvas::outputToConsole(){
-  Serial.write(27);       // escape command
-  Serial.print("[2J");    // clear screen command
-  Serial.write(27);       // escape command
-  Serial.print("[H");     // cursor to home command
-  uint8_t x,y;
-  for (y=0;y<height;y++){
-    Serial.print("|");
-    for (x=0;x<width;x++){
-      if (getPixel(x,y) == 0){
-        Serial.print(" ");
-      } else {
-        Serial.print("X");
-      }
-    }
-    Serial.println("|");
-  }
-  Serial.print("------------");
-}
-#endif
 

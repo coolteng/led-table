@@ -1,21 +1,53 @@
-#define  FIELD_WIDTH       52
-#define  FIELD_HEIGHT      11
-#define HORIZONTAL_LEFT_TO_RIGHT
+// #define TOWER // Uncomment if compiling for tower
+#define TABLE // Uncomment if compiling for table
 
-#define NUMBER_CONCURRENT_APPS 4
+#if defined(TOWER)
+  #define CONCURRENT_APPS 4
+  
+  #define  FIELD_WIDTH       13
+  #define  FIELD_HEIGHT      11
 
-#define LEDS_CHANNEL_1 312
-#define LEDS_CHANNEL_2 260
-#define LEDS_CHANNEL_3 0
-#define LEDS_CHANNEL_4 0
-#define LEDS_CHANNEL_5 0
-#define LEDS_CHANNEL_6 0
-#define LEDS_CHANNEL_7 0
-#define LEDS_CHANNEL_8 0
+  #define LEDS_CHANNEL_1 312
+  #define LEDS_CHANNEL_2 260
+  #define LEDS_CHANNEL_3 0
+  #define LEDS_CHANNEL_4 0
+  #define LEDS_CHANNEL_5 0
+  #define LEDS_CHANNEL_6 0
+  #define LEDS_CHANNEL_7 0
+  #define LEDS_CHANNEL_8 0
+
+  #define HORIZONTAL_LEFT_TO_RIGHT
+  
+#elif defined(TABLE)
+
+  #define CONCURRENT_APPS 1
+
+  #define  FIELD_WIDTH       12
+  #define  FIELD_HEIGHT      12
+
+  #define LEDS_CHANNEL_1 24
+  #define LEDS_CHANNEL_2 24
+  #define LEDS_CHANNEL_3 24
+  #define LEDS_CHANNEL_4 24
+  #define LEDS_CHANNEL_5 24
+  #define LEDS_CHANNEL_6 24
+  #define LEDS_CHANNEL_7 0
+  #define LEDS_CHANNEL_8 0
+
+  #define HORIZONTAL_LEFT_TO_RIGHT_AND_REVERSE
+
+#else 
+
+  #error "Neither TOWER nor TABLE defined"
+
+#endif
+
+// #define DISABLE_USB // Uncomment to disable USB 
 
 #define NUMBER_ALL_LEDS LEDS_CHANNEL_1+LEDS_CHANNEL_2+LEDS_CHANNEL_3+LEDS_CHANNEL_4+LEDS_CHANNEL_5+LEDS_CHANNEL_6+LEDS_CHANNEL_7+LEDS_CHANNEL_8
 
 #define USE_OCTOWS2811 // Select either OCTOWS2811 or
+
 //#define USE_FAST_LED   // FAST_LED as library to control the LED strips
 
 /*
@@ -60,12 +92,4 @@
 #define FAST_LED_CHANNEL_8_CHIPSET_WITH_CLOCK  // Comment if you use a chipset without clock
 #define FAST_LED_CHANNEL_8_DATA_PIN  7
 #define FAST_LED_CHANNEL_8_CLOCK_PIN 6
-
-/*
- * Define to disable the USB Input
- */
-//#define DISABLE_USB
-
-//#define USE_CONSOLE_OUTPUT //Uncomment if you want to be able to display the led array on the serial console (for debugging)
-//#define USE_CONSOLE_INPUT //Uncomment if you want to be able to play the game from the console
 
