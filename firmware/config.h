@@ -1,5 +1,5 @@
-//#define TOWER // Uncomment if compiling for tower
-#define TABLE // Uncomment if compiling for table
+#define TOWER // Uncomment if compiling for tower
+//#define TABLE // Uncomment if compiling for table
 
 #if defined(TOWER)
   #define CONCURRENT_APPS 4
@@ -17,6 +17,8 @@
   #define LEDS_CHANNEL_8 0
 
   #define HORIZONTAL_LEFT_TO_RIGHT
+  
+  #define LED_COLOR_LAYOUT WS2811_RGB
   
 #elif defined(TABLE)
 
@@ -36,6 +38,8 @@
 
   #define HORIZONTAL_LEFT_TO_RIGHT_AND_REVERSE
 
+  #define LED_COLOR_LAYOUT WS2811_GRB
+  
 #else 
 
   #error "Neither TOWER nor TABLE defined"

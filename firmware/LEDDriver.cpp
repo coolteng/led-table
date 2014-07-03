@@ -9,7 +9,7 @@
 
 DMAMEM int displayMemory[LEDS_CHANNEL_1*6];
 int drawingMemory[LEDS_CHANNEL_1*6];
-const int config = WS2811_GRB | WS2811_800kHz;
+const int config = LED_COLOR_LAYOUT | WS2811_800kHz;
 OctoWS2811 octoleds(LEDS_CHANNEL_1, displayMemory, drawingMemory, config);
 
 #endif

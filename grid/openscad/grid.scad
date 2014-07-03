@@ -1,21 +1,23 @@
-cell_size = 33;
 number_cells_horizontal = 12;
 number_cells_vertical = 12;
 
-led_width = 5;
+
+cell_size = 33; // width and length of one grid cell
+grid_height = cell_size; // height of the grid
+
+led_width = 5; // Size of the hole for the LED chips
 led_height = 5;
 
 bottom_grid_connect_width = 10;
+bottom_thickness = 3;
 
-grid_height = cell_size;
 grid_thickness = 3;
+
+joint_size = 0.2; // size to extend the holes with to allow easier assembling
+
 
 bottom_width = cell_size*number_cells_horizontal+grid_thickness;
 bottom_height = cell_size*number_cells_vertical+grid_thickness;
-bottom_thickness = 3;
-
-joint_size = 0.2;
-
 
 led_offset_x = (cell_size/2+led_width/2)-grid_thickness/2;
 led_offset_y = (cell_size/2+led_width/2)-grid_thickness/2;
@@ -57,7 +59,6 @@ module partA() {
       translate([x*cell_size+grid_thickness/2-(cell_size-bottom_grid_connect_width)/2,0,-1])
         cube([cell_size-bottom_grid_connect_width,bottom_thickness,grid_thickness+2]);
     }
-	
   }
 }
 
@@ -94,10 +95,13 @@ module partC() {
   }
 }
 
-//intersection() {
-//difference() {
-//  projection()  
-/*    bottomPlate();
+/* 
+ * Uncomment to check for intersections
+ */
+/*
+intersection() {
+  difference() {
+    bottomPlate();
 
     for(x=[1:number_cells_horizontal-1]) {
       translate([0,x*cell_size+grid_thickness,0])
@@ -116,31 +120,41 @@ module partC() {
         rotate([90,0,0])
           partC();
     }
-
-//}
+  }
+}
 */
-  projection()  
-    bottomPlate();
 
 
+/*
+ * Uncomment to render bottom plate
+ */
+//  projection() bottomPlate();
+
+
+/*
+ * Uncomment to render partA and partC
+ */
 /*
   projection()  
     for(x=[1:number_cells_horizontal-1]) {
       translate([0,x*(cell_size+5),0])
           partA();
     }
-	 projection()
+  projection()
     for(x=[0,number_cells_horizontal]) {
       translate([0,x*(cell_size+5),0])
           partC();
     }
 */
+
+/*
+ * Uncomment to render partB
+ */
 /*
   projection()  
     for(x=[0:number_cells_horizontal]) {
       translate([0,x*(cell_size+5),0])
           partB();
     }
-
 */
 
