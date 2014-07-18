@@ -25,8 +25,8 @@ void UsbTask();
 class Input {
 private:
   int controllerIndex;
-  uint8_t curControl = BTN_NONE;
-  uint8_t prevControl = BTN_NONE;  
+  uint8_t curControl;
+  uint8_t prevControl;  
   
 public:
   Input(int controllerIndex);

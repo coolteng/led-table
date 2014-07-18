@@ -56,7 +56,7 @@ void UsbTask(){
   #endif
 }
 
-Input::Input(int controllerIndex) : controllerIndex(controllerIndex) 
+Input::Input(int controllerIndex) : controllerIndex(controllerIndex), prevControl(BTN_NONE), curControl(BTN_NONE)
 {
 }
 
