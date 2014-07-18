@@ -44,6 +44,8 @@ extern OctoWS2811 octoleds;
 
 template<int ledsPerStrip>
 class OctoWS2811Driver : public LEDDriver {
+private:
+
 public:
   virtual void initPixels();
   virtual void setPixel(int pixel, color_t color);
