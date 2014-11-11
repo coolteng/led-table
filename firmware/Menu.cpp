@@ -23,7 +23,6 @@ Menu::Menu(size_t width, size_t height)
 
 void Menu::handleInput(Input& input)
 {
-  Serial.println("Handle input");
   uint8_t curControl = input.read();
   if (curControl != BTN_NONE){
     if (curControl == BTN_LEFT){
@@ -47,6 +46,7 @@ void Menu::run(unsigned long tick)
   if(tick - prevUpdateTime > TEXTSPEED)
   {
     ++textPosition;
+//    textPosition = 4;
     prevUpdateTime = tick;
   }
 }

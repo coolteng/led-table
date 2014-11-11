@@ -81,6 +81,15 @@ AppController appController[CONCURRENT_APPS] = {
 #endif
 };
 
+#if defined(TOWER)
+#include "Koelnturm.h"
+
+Canvas towerCanvas = Canvas(21, FIELD_HEIGHT, 9, 0, FIELD_WIDTH*CONCURRENT_APPS, leds);
+boolean showingTower = false;
+Koelnturm tower = Koelnturm(21,11);
+#endif
+
+
 
 void setup(){
   Serial.begin(115200);
@@ -105,7 +114,18 @@ void loop(){
   UsbTask();
   unsigned long currentTick = millis();
   for(int appIndex = 0; appIndex < CONCURRENT_APPS; ++appIndex) {
+#if defined(TOWER)
+    if(!showingTower) {
+#endif
     appController[appIndex].process(currentTick, input[appIndex], canvas[appIndex]);
+#if defined(TOWER)
+    }
+#endif
+//    for(int x=0; x<13;++x) {
+//      for(int y=0; y<11;++y) {
+//  canvas[appIndex].setPixel(x,y,COLOR_WHITE);
+//      }
+//    }
   }
   leds.showPixels();
   ++renderedFrames;
@@ -117,6 +137,20 @@ void loop(){
     Serial.println(renderedFrames);
     lastFPSUpdate = currentTick;
     renderedFrames = 0;
+#if defined(TOWER)
+    if(input[0].getL1R1Status()||input[1].getL1R1Status()
+      || input[2].getL1R1Status()||input[3].getL1R1Status()) {
+      showingTower = !showingTower;
+      if(showingTower) {
+        leds.clearPixels();
+        tower.reset();
+      }
+    }
+  }
+  tower.run(currentTick);
+  if(showingTower) {
+    tower.render(towerCanvas); 
+#endif
   }
 }
 

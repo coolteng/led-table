@@ -50,8 +50,6 @@ void initializeUsb()
 
 void UsbTask(){
   #ifndef DISABLE_USB
-  Serial.print("running UsbTask");
-  Serial.println((int)&Usb);
   Usb.Task();
   #endif
 }
@@ -99,6 +97,13 @@ uint8_t Input::read(){
       prevControl = curControl;
   }
   return curControl;
+}
+
+uint8_t Input::getL1R1Status(){
+  if (xboxController[controllerIndex].Xbox360Connected) {
+     return xboxController[controllerIndex].getButtonPress(L1) && xboxController[controllerIndex].getButtonPress(R1);
+  }
+  return false;
 }
 
 void Input::startRumble()
