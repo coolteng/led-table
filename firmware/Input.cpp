@@ -99,7 +99,7 @@ uint8_t Input::read(){
   return curControl;
 }
 
-uint8_t Input::getL1R1Status(){
+boolean Input::getL1R1Status(){
   if (xboxController[controllerIndex].Xbox360Connected) {
      return xboxController[controllerIndex].getButtonPress(L1) && xboxController[controllerIndex].getButtonPress(R1);
   }
