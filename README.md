@@ -1,6 +1,7 @@
 Arduino code for an interactive LED table, running on the Teensy3.
 
 The project page can be found at https://sites.google.com/site/klaasdc/led-table
+Build instructions can be found athttp://www.christoph-emonds.de/2014/08/03/build-instructions-for-a-led-arcade-table/
 
 The following libraries are needed:
 * Teensyduino
